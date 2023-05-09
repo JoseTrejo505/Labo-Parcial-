@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voletos de Avión</title> 
+    <html>
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de costos de boletos de avión</title>
+  <style>
+   
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    label, select, input {
+      margin: 10px;
+      font-size: 18px;
+    }
+    input[type="submit"] {
+      margin-top: 20px;
+      font-size: 24px;
+      padding: 10px;
+    }
+    #costo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de costos de boletos de avión</h1>
+  <form onsubmit="calcularCosto(); return false;">
+    <label for="ciudadOrigen">Ciudad de origen:</label>
+    <select id="ciudadOrigen">
+      <option value="Buenos Aires">Buenos Aires</option>
+      <option value="Santiago">Santiago</option>
+      <option value="Sao Paulo">Sao Paulo</option>
+    </select>
+
+    <label for="ciudadDestino">Ciudad de destino:</label>
+    <select id="ciudadDestino">
+      <option value="Buenos Aires">Buenos Aires</option>
+      <option value="Santiago">Santiago</option>
+      <option value="Sao Paulo">Sao Paulo</option>
+    </select>
+
+    <label for="fechaSalida">Fecha de salida:</label>
+    <input type="date" id="fechaSalida" required>
+
+    <label for="horaSalida">Hora de salida:</label>
+    <input type="time" id="horaSalida" required>
+
+    <input type="submit" value="Calcular costo">
+
+    <div id="costo"></div>
+  </form>
+
+  <script>
+    function calcularCosto() {
+      const ciudadOrigen = document.getElementById("ciudadOrigen").value;
+      const ciudadDestino = document.getElementById("ciudadDestino").value;
+      const fechaSalida = document.getElementById("fechaSalida").value;
+      const horaSalida = document.getElementById("horaSalida").value;
+
+      let costo = 200;
+
+      if (ciudadOrigen !== ciudadDestino) {
+        costo += 50;
+      }
+
+      const fecha = new Date(fechaSalida);
+      const diaSemana = fecha.getDay();
+
+      if (diaSemana === 5 || diaSemana === 6 || diaSemana === 0) {
+        costo += 100;
+      }
+
+      const hora = parseInt(horaSalida.split(":")[0]);
+
+      if ((hora >= 7 && hora < 9) || (hora >= 16 && hora < 18)) {
+        costo += 75;
+      }
+
+      document.getElementById("costo").innerHTML = "El costo de su boleto de avión es de $" + costo;
+    }
+  </script>
+</body>
+</html>
